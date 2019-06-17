@@ -73,6 +73,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/devtides/dogsproject/view/SettingsFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/devtides/dogsproject/viewmodel/BaseViewFragment.kt">
           <value>
             <set />
@@ -123,7 +128,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_dog.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_dog_large.xml">
           <value>
             <set />
           </value>
@@ -134,6 +149,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/menu/detail_menu.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/menu/list_menu.xml">
           <value>
             <set />
           </value>
@@ -153,6 +173,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/arrays.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/ic_launcher_background.xml">
           <value>
             <set />
@@ -164,6 +189,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/xml/preferences.xml">
           <value>
             <set />
           </value>

@@ -3,6 +3,7 @@ package com.devtides.dogsproject.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 
 class SharedPreferencesHelper {
 
@@ -21,7 +22,7 @@ class SharedPreferencesHelper {
         }
 
         private fun buildHelper(context: Context): SharedPreferencesHelper {
-            prefs = context.getSharedPreferences("DogPrefs", 0)
+            prefs = PreferenceManager.getDefaultSharedPreferences(context)
             return SharedPreferencesHelper()
         }
     }
@@ -31,4 +32,6 @@ class SharedPreferencesHelper {
     }
 
     fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)
+
+    fun getCacheSize() = prefs?.getString("pref_cache_size", "")
 }
