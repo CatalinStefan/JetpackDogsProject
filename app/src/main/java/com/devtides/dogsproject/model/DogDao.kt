@@ -7,7 +7,7 @@ import androidx.room.Query
 @Dao
 interface DogDao {
     @Insert
-    suspend fun insertAll(vararg dogs: DogBreed)
+    suspend fun insertAll(vararg dogs: DogBreed): List<Long>
 
     @Query("SELECT * FROM dogbreed")
     suspend fun getAllDogs(): List<DogBreed>

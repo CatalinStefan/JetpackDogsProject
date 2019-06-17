@@ -37,44 +37,9 @@ data class DogBreed(
     @ColumnInfo(name = "dog_url")
     @SerializedName("url")
     val imageUrl: String?
-): Parcelable {
+) {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-        uuid = parcel.readInt()
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(breedId)
-        parcel.writeString(dogBreed)
-        parcel.writeString(lifeSpan)
-        parcel.writeString(breedGroup)
-        parcel.writeString(bredFor)
-        parcel.writeString(temperament)
-        parcel.writeString(imageUrl)
-        parcel.writeInt(uuid)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<DogBreed> {
-        override fun createFromParcel(parcel: Parcel): DogBreed {
-            return DogBreed(parcel)
-        }
-
-        override fun newArray(size: Int): Array<DogBreed?> {
-            return arrayOfNulls(size)
-        }
-    }
 }
+
+data class DogPalette(var color: Int)

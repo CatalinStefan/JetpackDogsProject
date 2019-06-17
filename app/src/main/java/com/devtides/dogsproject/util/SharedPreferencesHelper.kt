@@ -2,6 +2,7 @@ package com.devtides.dogsproject.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class SharedPreferencesHelper {
 
@@ -26,7 +27,7 @@ class SharedPreferencesHelper {
     }
 
     fun saveUpdateTime(time: Long) {
-        prefs?.edit()?.putLong(PREF_TIME, time)?.apply()
+        prefs?.edit(commit = true) { putLong(PREF_TIME, time) }
     }
 
     fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)

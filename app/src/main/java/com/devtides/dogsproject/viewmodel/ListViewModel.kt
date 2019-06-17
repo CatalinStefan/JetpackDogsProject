@@ -2,11 +2,11 @@ package com.devtides.dogsproject.viewmodel
 
 import android.app.Application
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devtides.dogsproject.model.DogBreed
 import com.devtides.dogsproject.model.DogDatabase
 import com.devtides.dogsproject.model.DogsApiService
+import com.devtides.dogsproject.util.NotificationHelper
 import com.devtides.dogsproject.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,7 +24,7 @@ class ListViewModel(application: Application): BaseViewModel(application) {
     val loading = MutableLiveData<Boolean>()
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
-    private val refreshTime = 5L * 60 * 1000 * 1000 * 1000
+    private val refreshTime = 1 * 1000 * 1000 * 1000L
 
     fun refresh() {
         val updateTime = prefHelper.getUpdateTime()
@@ -53,8 +53,8 @@ class ListViewModel(application: Application): BaseViewModel(application) {
                 .subscribeWith(object: DisposableSingleObserver<List<DogBreed>>() {
                     override fun onSuccess(dogList: List<DogBreed>) {
                         storeDogsLocally(dogList)
-                        dogsRetrieved(dogList)
                         Toast.makeText(getApplication(), "Dogs retrieved from remote endpoint", Toast.LENGTH_SHORT).show()
+                        NotificationHelper(getApplication()).createDogNotification()
                     }
 
                     override fun onError(e: Throwable) {
@@ -75,7 +75,13 @@ class ListViewModel(application: Application): BaseViewModel(application) {
     private fun storeDogsLocally(list: List<DogBreed>) {
         launch {
             DogDatabase(getApplication()).dogDao().deleteAllDogs()
-            DogDatabase(getApplication()).dogDao().insertAll(*list.toTypedArray())
+            val result = DogDatabase(getApplication()).dogDao().insertAll(*list.toTypedArray())
+            var i = 0
+            while(i < list.size) {
+                list[i].uuid = result[i].toInt()
+                ++i
+            }
+            dogsRetrieved(list)
         }
         prefHelper.saveUpdateTime(System.nanoTime())
     }
