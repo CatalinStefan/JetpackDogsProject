@@ -29,7 +29,9 @@ import com.devtides.dogsproject.model.SmsInfo
 import com.devtides.dogsproject.viewmodel.DetailViewModel
 import android.app.PendingIntent
 import android.content.Intent
+import android.net.Uri
 import android.telephony.SmsManager
+import retrofit2.http.Url
 
 
 class DetailFragment : Fragment() {
@@ -101,6 +103,14 @@ class DetailFragment : Fragment() {
             R.id.action_send_sms -> {
                 sendSmsStarted = true
                 (activity as MainActivity).checkSmsPermission()
+            }
+            R.id.action_share -> {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Check out this dog")
+                intent.putExtra(Intent.EXTRA_TEXT, "${currentDog?.dogBreed} bred for ${currentDog?.bredFor}")
+                intent.putExtra(Intent.EXTRA_STREAM, currentDog?.imageUrl)
+                startActivity(Intent.createChooser(intent, "Share with"))
             }
         }
         return super.onOptionsItemSelected(item)
