@@ -1,0 +1,68 @@
+package com.devtides.dogsproject.view
+
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+
+import com.devtides.dogsproject.R
+import com.devtides.dogsproject.databinding.FragmentListBinding
+import com.devtides.dogsproject.viewmodel.ListViewModel
+
+class ListFragment : Fragment() {
+
+    private lateinit var dataBinding: FragmentListBinding
+    private lateinit var viewModel: ListViewModel
+    private val dogsListAdapter = DogsListAdapter(arrayListOf())
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
+        return dataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+        viewModel.refresh()
+
+        dataBinding.dogsList.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = dogsListAdapter
+        }
+
+        observeViewModel()
+    }
+
+    fun observeViewModel() {
+        viewModel.dogs.observe(this, Observer {dogs ->
+            dogs?.let {
+                dataBinding.dogsList.visibility = View.VISIBLE
+                dogsListAdapter.updateDogList(it) }
+        })
+
+        viewModel.dogsLoadError.observe(this, Observer { isError ->
+            isError?.let { dataBinding.listError.visibility = if(it) View.VISIBLE else View.GONE }
+        })
+
+        viewModel.loading.observe(this, Observer { isLoading ->
+            isLoading?.let {
+                dataBinding.loadingView.visibility = if(it) View.VISIBLE else View.GONE
+                if(it) {
+                    dataBinding.listError.visibility = View.GONE
+                    dataBinding.dogsList.visibility = View.GONE
+                }
+            }
+        })
+    }
+}
